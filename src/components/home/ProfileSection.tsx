@@ -21,12 +21,6 @@ export const ProfileSection = () => {
           <div>
             <h3 className="font-semibold text-lg">{profile.firstName} {profile.lastName}</h3>
             <p className="text-sm text-muted-foreground">@{profile.username}</p>
-            {profile.currentMood && (
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-sm">{profile.currentMood.emoji}</span>
-                <span className="text-xs text-muted-foreground">Feeling {profile.currentMood.label}</span>
-              </div>
-            )}
           </div>
         </div>
         <Button 

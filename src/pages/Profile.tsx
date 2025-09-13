@@ -76,12 +76,6 @@ const Profile = () => {
             <h2 className="text-xl font-bold mb-1">{profile.firstName} {profile.lastName}</h2>
             <p className="text-sm text-muted-foreground">@{profile.username}</p>
             <p className="text-sm text-muted-foreground">{profile.bio}</p>
-            {profile.currentMood && (
-              <div className="mt-3 inline-flex items-center gap-2 bg-card border rounded-full px-3 py-1">
-                <span className="text-lg">{profile.currentMood.emoji}</span>
-                <span className="text-sm text-muted-foreground">Feeling {profile.currentMood.label}</span>
-              </div>
-            )}
           </div>
 
           {/* Menu Sections */}

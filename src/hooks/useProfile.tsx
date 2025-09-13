@@ -9,18 +9,11 @@ interface ProfileData {
   bio: string;
   location: string;
   profilePhoto: string;
-  currentMood?: {
-    id: string;
-    emoji: string;
-    label: string;
-    timestamp: string;
-  } | null;
 }
 
 interface ProfileContextType {
   profile: ProfileData;
   updateProfile: (data: Partial<ProfileData>) => void;
-  updateMood: (mood: { id: string; emoji: string; label: string }) => void;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
@@ -35,25 +28,14 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     bio: 'Student at State University passionate about mental health advocacy.',
     location: 'New York, NY',
     profilePhoto: '',
-    currentMood: null,
   });
 
   const updateProfile = (data: Partial<ProfileData>) => {
     setProfile(prev => ({ ...prev, ...data }));
   };
 
-  const updateMood = (mood: { id: string; emoji: string; label: string }) => {
-    setProfile(prev => ({
-      ...prev,
-      currentMood: {
-        ...mood,
-        timestamp: new Date().toISOString(),
-      }
-    }));
-  };
-
   return (
-    <ProfileContext.Provider value={{ profile, updateProfile, updateMood }}>
+    <ProfileContext.Provider value={{ profile, updateProfile }}>
       {children}
     </ProfileContext.Provider>
   );

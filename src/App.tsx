@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProfileProvider } from "@/hooks/useProfile";
 import { AccessibilityProvider } from "@/hooks/useAccessibility";
 import Home from "./pages/Home";
-import MoodCheckIn from "./pages/MoodCheckIn";
 import Community from "./pages/Community";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
@@ -33,7 +32,6 @@ const App = () => (
         <BrowserRouter>
           <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/mood-check-in" element={<MoodCheckIn />} />
           <Route path="/community" element={<Community />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/profile" element={<Profile />} />
