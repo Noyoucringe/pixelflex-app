@@ -15,6 +15,8 @@ import NotificationSettings from "./pages/NotificationSettings";
 import AccessibilitySettings from "./pages/AccessibilitySettings";
 import HelpSupport from "./pages/HelpSupport";
 import ReportIssue from "./pages/ReportIssue";
+import ForumDetail from "./pages/ForumDetail";
+import ResourceDetail from "./pages/ResourceDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,7 +38,9 @@ const App = () => (
           <Route path="/notifications" element={<NotificationSettings />} />
           <Route path="/accessibility" element={<AccessibilitySettings />} />
           <Route path="/help-support" element={<HelpSupport />} />
-          <Route path="/report-issue" element={<ReportIssue />} />
+        <Route path="/report-issue" element={<ReportIssue />} />
+        <Route path="/forum/:id" element={<ForumDetail />} />
+        <Route path="/resource/:id" element={<ResourceDetail />} />
           <Route path="/discussion/:id" element={<Discussion />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

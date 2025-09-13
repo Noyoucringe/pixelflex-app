@@ -51,12 +51,21 @@ const forums = [
 
 const Community = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [joinedForums, setJoinedForums] = useState<number[]>([]);
   const navigate = useNavigate();
 
   const filteredForums = forums.filter(forum =>
     forum.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     forum.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleJoinToggle = (forumId: number) => {
+    setJoinedForums(prev => 
+      prev.includes(forumId) 
+        ? prev.filter(id => id !== forumId)
+        : [...prev, forumId]
+    );
+  };
 
   return (
     <MobileLayout currentTab="community">
@@ -102,8 +111,16 @@ const Community = () => {
                       </p>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="ml-4 text-primary border-primary hover:bg-primary hover:text-primary-foreground">
-                    Join
+                  <Button 
+                    variant={joinedForums.includes(forum.id) ? "default" : "outline"} 
+                    size="sm" 
+                    className="ml-4"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleJoinToggle(forum.id);
+                    }}
+                  >
+                    {joinedForums.includes(forum.id) ? 'Joined' : 'Join'}
                   </Button>
                 </div>
               </Card>

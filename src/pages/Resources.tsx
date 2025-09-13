@@ -93,7 +93,11 @@ const Resources = () => {
               {filteredResources.map((resource) => {
                 const Icon = resource.icon;
                 return (
-                  <Card key={resource.id} className="cursor-pointer hover:shadow-md transition-shadow">
+                  <Card 
+                    key={resource.id} 
+                    className="cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => navigate(`/resource/${resource.id}`)}
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
