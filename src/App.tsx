@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProfileProvider } from "@/hooks/useProfile";
 import { AccessibilityProvider } from "@/hooks/useAccessibility";
 import Home from "./pages/Home";
+import Auth from "./pages/Auth";
 import Community from "./pages/Community";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
@@ -32,6 +33,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/community" element={<Community />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/profile" element={<Profile />} />
