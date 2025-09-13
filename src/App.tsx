@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ProfileProvider } from "@/hooks/useProfile";
 import Home from "./pages/Home";
 import MoodCheckIn from "./pages/MoodCheckIn";
 import Community from "./pages/Community";
@@ -24,10 +25,11 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
+      <ProfileProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/mood-check-in" element={<MoodCheckIn />} />
           <Route path="/community" element={<Community />} />
@@ -44,8 +46,9 @@ const App = () => (
           <Route path="/discussion/:id" element={<Discussion />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </ProfileProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

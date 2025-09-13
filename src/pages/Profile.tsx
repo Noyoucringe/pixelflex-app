@@ -5,10 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MobileLayout } from '@/components/layout/MobileLayout';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useProfile } from '@/hooks/useProfile';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { profile } = useProfile();
 
   const handleLogout = () => {
     toast({
@@ -57,19 +59,28 @@ const Profile = () => {
           <div className="text-center mb-8">
             <div className="relative inline-block">
               <Avatar className="w-24 h-24 mx-auto mb-4">
-                <AvatarImage src="" alt="Profile" />
-                <AvatarFallback className="text-2xl bg-primary/10 text-primary">SC</AvatarFallback>
+                <AvatarImage src={profile.profilePhoto} alt="Profile" />
+                <AvatarFallback className="text-2xl bg-primary/10 text-primary">
+                  {profile.firstName.charAt(0)}{profile.lastName.charAt(0)}
+                </AvatarFallback>
               </Avatar>
               <Button 
                 size="sm" 
                 className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary text-primary-foreground p-0"
+                onClick={() => navigate('/edit-profile')}
               >
                 <Edit size={14} />
               </Button>
             </div>
-            <h2 className="text-xl font-bold mb-1">Sophia Carter</h2>
-            <p className="text-sm text-muted-foreground">@sophia.carter</p>
-            <p className="text-sm text-muted-foreground">Student at State University</p>
+            <h2 className="text-xl font-bold mb-1">{profile.firstName} {profile.lastName}</h2>
+            <p className="text-sm text-muted-foreground">@{profile.username}</p>
+            <p className="text-sm text-muted-foreground">{profile.bio}</p>
+            {profile.currentMood && (
+              <div className="mt-3 inline-flex items-center gap-2 bg-card border rounded-full px-3 py-1">
+                <span className="text-lg">{profile.currentMood.emoji}</span>
+                <span className="text-sm text-muted-foreground">Feeling {profile.currentMood.label}</span>
+              </div>
+            )}
           </div>
 
           {/* Menu Sections */}

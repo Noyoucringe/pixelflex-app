@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useProfile } from '@/hooks/useProfile';
 
 const moods = [
   { id: 'happy', emoji: '😊', label: 'Happy', color: 'bg-mood-happy/20 border-mood-happy text-mood-happy' },
@@ -18,6 +19,7 @@ const MoodCheckIn = () => {
   const [notes, setNotes] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { updateMood } = useProfile();
 
   const handleSubmit = () => {
     if (!selectedMood) {
@@ -27,6 +29,15 @@ const MoodCheckIn = () => {
         variant: "destructive",
       });
       return;
+    }
+
+    const selectedMoodData = moods.find(m => m.id === selectedMood);
+    if (selectedMoodData) {
+      updateMood({
+        id: selectedMoodData.id,
+        emoji: selectedMoodData.emoji,
+        label: selectedMoodData.label
+      });
     }
 
     toast({

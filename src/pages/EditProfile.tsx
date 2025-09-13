@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { ArrowLeft, Camera, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -9,26 +9,43 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MobileLayout } from '@/components/layout/MobileLayout';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useProfile } from '@/hooks/useProfile';
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { profile, updateProfile } = useProfile();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [formData, setFormData] = useState({
-    firstName: 'Sophia',
-    lastName: 'Carter',
-    username: 'sophia.carter',
-    email: 'sophia@example.com',
-    phone: '+1 (555) 123-4567',
-    bio: 'Student at State University passionate about mental health advocacy.',
-    location: 'New York, NY'
+    firstName: profile.firstName,
+    lastName: profile.lastName,
+    username: profile.username,
+    email: profile.email,
+    phone: profile.phone,
+    bio: profile.bio,
+    location: profile.location,
+    profilePhoto: profile.profilePhoto
   });
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const photoUrl = e.target?.result as string;
+        setFormData(prev => ({ ...prev, profilePhoto: photoUrl }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = () => {
+    updateProfile(formData);
     toast({
       title: "Profile updated successfully",
       description: "Your changes have been saved.",
@@ -55,15 +72,25 @@ const EditProfile = () => {
           <div className="text-center">
             <div className="relative inline-block">
               <Avatar className="w-24 h-24 mx-auto">
-                <AvatarImage src="" alt="Profile" />
-                <AvatarFallback className="text-2xl bg-primary/10 text-primary">SC</AvatarFallback>
+                <AvatarImage src={formData.profilePhoto} alt="Profile" />
+                <AvatarFallback className="text-2xl bg-primary/10 text-primary">
+                  {formData.firstName.charAt(0)}{formData.lastName.charAt(0)}
+                </AvatarFallback>
               </Avatar>
               <Button 
                 size="sm" 
                 className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary text-primary-foreground p-0"
+                onClick={() => fileInputRef.current?.click()}
               >
                 <Camera size={14} />
               </Button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handlePhotoUpload}
+                accept="image/*"
+                className="hidden"
+              />
             </div>
             <p className="text-sm text-muted-foreground mt-2">Tap to change photo</p>
           </div>
