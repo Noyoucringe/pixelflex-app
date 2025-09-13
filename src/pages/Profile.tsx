@@ -1,0 +1,130 @@
+import { ArrowLeft, ChevronRight, Edit, Shield, Bell, Accessibility, HelpCircle, Flag, LogOut } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { MobileLayout } from '@/components/layout/MobileLayout';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
+
+const Profile = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = () => {
+    toast({
+      title: "Logged out successfully",
+      description: "You have been logged out of your account.",
+    });
+  };
+
+  const menuItems = [
+    {
+      section: 'Account',
+      items: [
+        { icon: Edit, label: 'Edit Profile', description: 'Manage your personal information', action: () => {} },
+        { icon: Shield, label: 'Privacy', description: 'Adjust your privacy settings', action: () => {} },
+      ]
+    },
+    {
+      section: 'Settings',
+      items: [
+        { icon: Bell, label: 'Notifications', description: 'Customize your notification preferences', action: () => {} },
+        { icon: Accessibility, label: 'Accessibility', description: 'Adjust app appearance and accessibility', action: () => {} },
+      ]
+    },
+    {
+      section: 'Support',
+      items: [
+        { icon: HelpCircle, label: 'Help & Support', description: 'Get help and support', action: () => {} },
+        { icon: Flag, label: 'Report Issue', description: 'Report a problem or provide feedback', action: () => {} },
+      ]
+    }
+  ];
+
+  return (
+    <MobileLayout currentTab="profile">
+      <div className="bg-background min-h-screen">
+        <header className="flex items-center justify-between p-4 bg-card border-b">
+          <Button variant="ghost" size="sm">
+            <ArrowLeft size={20} />
+          </Button>
+          <h1 className="text-lg font-semibold">Profile</h1>
+          <div className="w-10" />
+        </header>
+
+        <div className="p-4">
+          {/* Profile Header */}
+          <div className="text-center mb-8">
+            <div className="relative inline-block">
+              <Avatar className="w-24 h-24 mx-auto mb-4">
+                <AvatarImage src="" alt="Profile" />
+                <AvatarFallback className="text-2xl bg-primary/10 text-primary">SC</AvatarFallback>
+              </Avatar>
+              <Button 
+                size="sm" 
+                className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary text-primary-foreground p-0"
+              >
+                <Edit size={14} />
+              </Button>
+            </div>
+            <h2 className="text-xl font-bold mb-1">Sophia Carter</h2>
+            <p className="text-sm text-muted-foreground">@sophia.carter</p>
+            <p className="text-sm text-muted-foreground">Student at State University</p>
+          </div>
+
+          {/* Menu Sections */}
+          <div className="space-y-6">
+            {menuItems.map((section) => (
+              <div key={section.section}>
+                <h3 className="text-sm font-medium text-muted-foreground mb-3 px-1">
+                  {section.section}
+                </h3>
+                <Card>
+                  <div className="divide-y divide-border">
+                    {section.items.map((item, index) => {
+                      const Icon = item.icon;
+                      return (
+                        <div
+                          key={index}
+                          onClick={item.action}
+                          className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                        >
+                          <div className="flex items-center space-x-4">
+                            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                              <Icon size={20} className="text-primary" />
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-sm">{item.label}</h4>
+                              <p className="text-xs text-muted-foreground mt-0.5">
+                                {item.description}
+                              </p>
+                            </div>
+                          </div>
+                          <ChevronRight size={16} className="text-muted-foreground" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Card>
+              </div>
+            ))}
+          </div>
+
+          {/* Logout Button */}
+          <div className="mt-8">
+            <Button 
+              onClick={handleLogout}
+              variant="destructive" 
+              className="w-full py-3 rounded-xl font-medium"
+            >
+              <LogOut size={20} className="mr-2" />
+              Log Out
+            </Button>
+          </div>
+        </div>
+      </div>
+    </MobileLayout>
+  );
+};
+
+export default Profile;
