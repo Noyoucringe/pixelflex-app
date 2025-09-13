@@ -129,6 +129,80 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: var(--base-font-size, 16px);
+  }
+
+  /* Accessibility classes */
+  .high-contrast {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 100%;
+    --border: 0 0% 30%;
+    --input: 0 0% 20%;
+  }
+
+  .large-text {
+    --base-font-size: 20px;
+  }
+
+  .large-text * {
+    font-size: 1.25em !important;
+  }
+
+  .reduce-motion,
+  .reduce-motion *,
+  .reduce-motion *::before,
+  .reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Color blind friendly schemes */
+  .color-scheme-protanopia {
+    --primary: 210 100% 55%;
+    --mood-happy: 200 100% 60%;
+    --mood-stressed: 0 0% 40%;
+    --gaming: 210 60% 50%;
+  }
+
+  .color-scheme-deuteranopia {
+    --primary: 210 100% 55%;
+    --mood-happy: 200 100% 60%;
+    --mood-stressed: 0 0% 40%;
+    --creative: 210 60% 50%;
+  }
+
+  .color-scheme-tritanopia {
+    --primary: 340 100% 55%;
+    --mood-happy: 0 100% 60%;
+    --mood-stressed: 0 0% 40%;
+    --advocacy: 340 60% 50%;
+  }
+
+  .color-scheme-monochrome {
+    --primary: 0 0% 20%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 0 0% 80%;
+    --accent-foreground: 0 0% 20%;
+    --mood-happy: 0 0% 60%;
+    --mood-stressed: 0 0% 30%;
+    --mood-anxious: 0 0% 40%;
+    --mood-neutral: 0 0% 50%;
+  }
+
+  .color-blind-support .mood-happy {
+    border: 2px solid hsl(var(--foreground));
+  }
+
+  .color-blind-support .mood-stressed {
+    border: 2px dashed hsl(var(--foreground));
+  }
+
+  .color-blind-support .mood-anxious {
+    border: 2px dotted hsl(var(--foreground));
   }
 
   /* Mobile-first responsive containers */

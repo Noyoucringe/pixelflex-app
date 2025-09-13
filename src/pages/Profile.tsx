@@ -6,6 +6,7 @@ import { MobileLayout } from '@/components/layout/MobileLayout';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { useProfile } from '@/hooks/useProfile';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const Profile = () => {
             <ArrowLeft size={20} />
           </Button>
           <h1 className="text-lg font-semibold">Profile</h1>
-          <div className="w-10" />
+          <ThemeToggle />
         </header>
 
         <div className="p-4">

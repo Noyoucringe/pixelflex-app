@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProfileProvider } from "@/hooks/useProfile";
+import { AccessibilityProvider } from "@/hooks/useAccessibility";
 import Home from "./pages/Home";
 import MoodCheckIn from "./pages/MoodCheckIn";
 import Community from "./pages/Community";
@@ -25,7 +26,8 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <ProfileProvider>
+      <AccessibilityProvider>
+        <ProfileProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -48,7 +50,8 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
-      </ProfileProvider>
+        </ProfileProvider>
+      </AccessibilityProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

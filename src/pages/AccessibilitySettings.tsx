@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ArrowLeft, Accessibility, Eye, Type, Palette, Volume2, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -9,30 +8,43 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { MobileLayout } from '@/components/layout/MobileLayout';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useAccessibility } from '@/hooks/useAccessibility';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const AccessibilitySettings = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  
-  const [settings, setSettings] = useState({
-    highContrast: false,
-    largeText: false,
-    reduceMotion: false,
-    screenReader: false,
-    darkMode: false,
-    colorBlindSupport: false
-  });
+  const { settings, updateSetting, toggleSetting } = useAccessibility();
 
-  const [fontSize, setFontSize] = useState([16]);
-  const [volume, setVolume] = useState([80]);
-  const [colorScheme, setColorScheme] = useState('default');
-  const [language, setLanguage] = useState('english');
-
-  const handleToggle = (setting: string) => {
-    setSettings(prev => ({ ...prev, [setting]: !prev[setting] }));
+  const handleToggle = (setting: keyof typeof settings) => {
+    toggleSetting(setting);
     toast({
       title: "Accessibility updated",
       description: "Your preference has been applied.",
+    });
+  };
+
+  const handleFontSizeChange = (value: number[]) => {
+    updateSetting('fontSize', value[0]);
+  };
+
+  const handleVolumeChange = (value: number[]) => {
+    updateSetting('volume', value[0]);
+  };
+
+  const handleColorSchemeChange = (value: string) => {
+    updateSetting('colorScheme', value);
+    toast({
+      title: "Color scheme updated",
+      description: "Your color preference has been applied.",
+    });
+  };
+
+  const handleLanguageChange = (value: string) => {
+    updateSetting('language', value);
+    toast({
+      title: "Language updated",
+      description: "App language has been changed.",
     });
   };
 
@@ -109,7 +121,7 @@ const AccessibilitySettings = () => {
             <ArrowLeft size={20} />
           </Button>
           <h1 className="text-lg font-semibold">Accessibility</h1>
-          <div className="w-10" />
+          <ThemeToggle />
         </header>
 
         <div className="p-4 space-y-6">
@@ -143,7 +155,7 @@ const AccessibilitySettings = () => {
                         <Switch
                           id={item.key}
                           checked={item.value}
-                          onCheckedChange={() => handleToggle(item.key)}
+                          onCheckedChange={() => handleToggle(item.key as keyof typeof settings)}
                         />
                       </div>
                     );
@@ -162,26 +174,26 @@ const AccessibilitySettings = () => {
                 <p className="text-xs text-muted-foreground">Adjust text size for comfort</p>
               </div>
             </div>
-            <div className="space-y-3">
-              <div className="px-2">
-                <Slider
-                  value={fontSize}
-                  onValueChange={setFontSize}
-                  max={24}
-                  min={12}
-                  step={1}
-                  className="w-full"
-                />
-                <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                  <span>Small</span>
-                  <span>Current: {fontSize[0]}px</span>
-                  <span>Large</span>
+              <div className="space-y-3">
+                <div className="px-2">
+                  <Slider
+                    value={[settings.fontSize]}
+                    onValueChange={handleFontSizeChange}
+                    max={24}
+                    min={12}
+                    step={1}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                    <span>Small</span>
+                    <span>Current: {settings.fontSize}px</span>
+                    <span>Large</span>
+                  </div>
+                </div>
+                <div className="text-center p-3 bg-muted rounded-lg" style={{ fontSize: `${settings.fontSize}px` }}>
+                  Sample text preview
                 </div>
               </div>
-              <div className="text-center p-3 bg-muted rounded-lg" style={{ fontSize: `${fontSize[0]}px` }}>
-                Sample text preview
-              </div>
-            </div>
           </Card>
 
           {/* Color Scheme Selection */}
@@ -193,7 +205,7 @@ const AccessibilitySettings = () => {
                 <p className="text-xs text-muted-foreground">Choose your preferred color palette</p>
               </div>
             </div>
-            <Select value={colorScheme} onValueChange={setColorScheme}>
+            <Select value={settings.colorScheme} onValueChange={handleColorSchemeChange}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -216,7 +228,7 @@ const AccessibilitySettings = () => {
                 <p className="text-xs text-muted-foreground">App language and region</p>
               </div>
             </div>
-            <Select value={language} onValueChange={setLanguage}>
+            <Select value={settings.language} onValueChange={handleLanguageChange}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -244,8 +256,8 @@ const AccessibilitySettings = () => {
                 <div className="px-2">
                   <Label className="text-sm text-muted-foreground">Voice Volume</Label>
                   <Slider
-                    value={volume}
-                    onValueChange={setVolume}
+                    value={[settings.volume]}
+                    onValueChange={handleVolumeChange}
                     max={100}
                     min={0}
                     step={5}
@@ -253,7 +265,7 @@ const AccessibilitySettings = () => {
                   />
                   <div className="flex justify-between text-xs text-muted-foreground mt-1">
                     <span>Mute</span>
-                    <span>{volume[0]}%</span>
+                    <span>{settings.volume}%</span>
                     <span>Loud</span>
                   </div>
                 </div>
