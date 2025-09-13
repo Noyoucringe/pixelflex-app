@@ -21,22 +21,22 @@ const Profile = () => {
     {
       section: 'Account',
       items: [
-        { icon: Edit, label: 'Edit Profile', description: 'Manage your personal information', action: () => {} },
-        { icon: Shield, label: 'Privacy', description: 'Adjust your privacy settings', action: () => {} },
+        { icon: Edit, label: 'Edit Profile', description: 'Manage your personal information', action: () => navigate('/edit-profile') },
+        { icon: Shield, label: 'Privacy', description: 'Adjust your privacy settings', action: () => navigate('/privacy') },
       ]
     },
     {
       section: 'Settings',
       items: [
-        { icon: Bell, label: 'Notifications', description: 'Customize your notification preferences', action: () => {} },
-        { icon: Accessibility, label: 'Accessibility', description: 'Adjust app appearance and accessibility', action: () => {} },
+        { icon: Bell, label: 'Notifications', description: 'Customize your notification preferences', action: () => navigate('/notifications') },
+        { icon: Accessibility, label: 'Accessibility', description: 'Adjust app appearance and accessibility', action: () => navigate('/accessibility') },
       ]
     },
     {
       section: 'Support',
       items: [
-        { icon: HelpCircle, label: 'Help & Support', description: 'Get help and support', action: () => {} },
-        { icon: Flag, label: 'Report Issue', description: 'Report a problem or provide feedback', action: () => {} },
+        { icon: HelpCircle, label: 'Help & Support', description: 'Get help and support', action: () => navigate('/help-support') },
+        { icon: Flag, label: 'Report Issue', description: 'Report a problem or provide feedback', action: () => navigate('/report-issue') },
       ]
     }
   ];

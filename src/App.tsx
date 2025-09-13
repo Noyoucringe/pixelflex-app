@@ -9,6 +9,12 @@ import Community from "./pages/Community";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 import Discussion from "./pages/Discussion";
+import EditProfile from "./pages/EditProfile";
+import Privacy from "./pages/Privacy";
+import NotificationSettings from "./pages/NotificationSettings";
+import AccessibilitySettings from "./pages/AccessibilitySettings";
+import HelpSupport from "./pages/HelpSupport";
+import ReportIssue from "./pages/ReportIssue";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +31,12 @@ const App = () => (
           <Route path="/community" element={<Community />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/notifications" element={<NotificationSettings />} />
+          <Route path="/accessibility" element={<AccessibilitySettings />} />
+          <Route path="/help-support" element={<HelpSupport />} />
+          <Route path="/report-issue" element={<ReportIssue />} />
           <Route path="/discussion/:id" element={<Discussion />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
